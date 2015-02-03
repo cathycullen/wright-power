@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Jma Welcome Email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Responsive stuff -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+  <link href="css/jma.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+  <script src="js/jquery.progressTimer.js"></script>
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  <style>
+  h1, h2, h3, h4, h5, legend, p {
+  color: #5e605d;
+}
+  </style>
+  </head>
+
+  <body>
+    <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
+    <form action="/send_invitation_email" method="post" >
+       <a href="http://wrightliving.com"><img src="http://wrightliving.com/wp-content/themes/wli/images/wli-logo.jpg" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a><a href="http://wrightliving.com"><img src="images/Wright-Logo-small.jpg" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+				<br>
+          <br>
+          <p>Dear <%=@name%>,</p>
+          <p><%=@text%></p>
+        <br>
+        <p  style="color: #656769;">  Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form?team_member=<%= @team_member%>" style="color: #8bc129;">Registration Page</a> to insure your spot today.<p>
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="well">
+              <p><b>Leadership and Power Blockers  Feb 25th 2015</b></p>
+              <p>Registration and Networking 6:30 pm</p>
+              <p>7:00 - 8:00 pm  Guest Speaker Dr Bob Wright</p>
+              <p>405 N Wabash Ave, 3rd Floor</p>
+              <p>Chicago, IL  60611</p>
+        <p>Please sign in with the building's concierge and take the elevators up to the 3rd floor.</p>
+             </div>
+           </div>
+         </div>
+         
+        <p>I look forward to the opportunity to see you!</p>
+         
+        <p>Best regards,</p>
+        <p><%=@team_member%></p>
+        <br>
+      <div >
+        <input type="hidden" name="name" value="<%= @name%>">
+        <input type="hidden" name="email" value="<%= @email%>">
+        <input type="hidden" name="text" value="<%= @text%>">
+        <input type="hidden" name="team_member" value="<%= @team_member%>">
+      </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success" title="Select to Email to Contact">Submit</button>
+          <button type="reset" class="btn">Cancel</button>
+        </div>
+  </div>
+  
+</body>
+</html>
