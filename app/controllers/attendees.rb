@@ -16,6 +16,13 @@ get '/' do
   @errors = []
     erb :show_client_invitation
 end
+post '/' do
+  team_members
+  puts "team members #{@team_members}"
+  @errors = []
+    erb :show_client_invitation
+end
+
 
 post '/send_invitation_email' do
 
