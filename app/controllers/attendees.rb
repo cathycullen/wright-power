@@ -1,5 +1,6 @@
 configure do
   @team_members = TeamMember.all
+
 end
 
 helpers do
@@ -189,8 +190,19 @@ end
 
 post '/submit_registration' do
   puts "params  #{params}"
-  erb :thank_you, :layout => :min_layout
   #get attendee and save info
+  if !params[:email].nil?  && !params[:attending].nil?
+    email = params[:email]
+    attending = params[:attending]
+    attendee = Attendee.find_by_email(email)
+    if !attendee.nil?
+      attendee.attending = attending
+      attendee.save
+      puts "Attendee #{attendee.name} is attending?  #{attending}"
+    end
+  end
+  erb :thank_you, :layout => :min_layout
+
 end
 
 
