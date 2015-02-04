@@ -1,0 +1,121 @@
+<div class="container" style="width:100%; margin-left:4%">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-2">
+      <h4>Invitations Sent: <%= @sum_invitations_sent  %></h4>
+    </div>
+    <div class="col-md-2">
+      <h4>Total Attending: <%= @sum_attendees  %></h4>
+    </div>
+  </div>
+ 
+ 
+
+
+  <div class="row">
+    <div class="col-md-3" id="leftCol">
+      <h3>Filters</h3>
+    </div>
+    <div class="col-md-9">
+      <h3>Win Event Invitation Summary</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3" id="leftCol">
+      <form class="form-horizontal well" action="/filter_attendees" method="post">
+      <fieldset>
+        <!-- Form Name -->
+        <div class="control-group" style="display:block; line-height:2">
+          <div  style="position:relative;">
+            <label class="control-label" for="textarea">Team Member</label>  
+            <select name="team_member[]"  >
+             <% if @team_member_selected == "All" %>
+                <option value="All" selected>All</option>"
+              <%else%>
+                <option value="All">All</option>"
+              <% end %>
+              <% team_members.each do |team_member|%>         
+               <% if @team_member_selected == team_member.id.to_s %>
+                  <option value="<%= team_member.id %>" selected><%= team_member.name %></option>
+                <%else%>
+                  <option value="<%= team_member.id %>"><%= team_member.name %></option>
+                <% end %>
+              <% end %>
+            </select>
+            <br>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <div class="control-group" style="display:block; line-height:2">
+          <div  style="position:relative;">
+            <label class="control-label" for="textarea">Attending</label>  
+            <select name="attending[]"  >
+             <% if @attending_selected == "All" %>
+                <option value="All" selected>All</option>"
+              <%else%>
+                <option value="All">All</option>"
+              <% end %>
+
+
+              <% if @attending_selected == "true" %>
+                <option value="true" selected>Attending</option>"
+              <%else%>
+                <option value="true">Attending</option>"
+              <% end %>
+              <% if @attending_selected == "false" %>
+                <option value="false" selected>Not Yet</option>"
+              <%else%>
+                <option value="false">Not Yet</option>"
+              <% end %>
+              
+            </select>
+            <br>
+          </div>
+        </div>
+        </fieldset>
+          <input type="submit" value="Submit" name="submit" class="btn btn-success"  >
+          <br>
+      </form>
+    </div>
+    <div class="col-md-9">
+      <table class="table table-condensed table-bordered table-striped table-hover table-responsive" style="display:block; height:300px;">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Attendee Name</th>
+            <th>Email</th>
+            <th>Team Member</th>
+            <th>Attending?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @attendees != nil && @attendees.size > 0 %>
+            <% @attendees.each do |attendee| %>
+              <tr>
+                <td><%= attendee[:id]%></td>
+                <td><%= attendee[:name]%></td>
+                <td><%= attendee[:email] %></td>
+                <td><%= TeamMember.find_by_id(attendee[:team_member_id]).name %></td>
+                <% if attendee[:attending] %>
+                  <td>yes</td>
+                <% else %>
+                  <td>no</td>
+                <% end %>
+              </tr> 
+          <% end %> 
+          <% end %> 
+        </tbody>
+      </table>  
+         <br>
+      </div>
+    </div>
+    <br> 
+  </div>
+    </div>
+    <br>
+
+
+
+</div>

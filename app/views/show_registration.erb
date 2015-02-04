@@ -1,0 +1,30 @@
+<section id="forms" style="margin-left: 30%;">
+    <div class="col-md-7">
+      <br>
+       <form class="form-horizontal well" action="/submit_registration" method="post" >
+       
+        <fieldset>
+          <legend>Register for Leadership and Power Blockers</legend>
+          <div class="control-group" >
+            <div class="col-md-12">
+              <label class="control-label" for="textarea">Name</label> 
+              <input type="text" class="form-control" name="name" value="<%= @name %>" required >
+              <label class="control-label" for="textarea">Email</label>
+              <input type="text" class="form-control" name="email" value="<%= @email %>"  required >
+               <label class="control-label" for="textarea">Are You Attending?</label>  
+                <select name="attending" style="width:100%; ">
+                    <option value="true" selected>Yes</option>
+                    <option value="false">No</option>
+                </select>
+              <input type="hidden" class="form-control" name="team_member" value="<%= @team_member %>"  required >
+              <hr>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="reset" class="btn">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+</section>
+

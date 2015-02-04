@@ -1,14 +1,11 @@
 configure do
   @team_members = TeamMember.all
-  puts "configure called  "
 end
 
 helpers do
   @team_members = TeamMember.all
-  puts "helpers called  #{@team_members.count}"
 
    def team_members
-    puts "is nil categories? #{@categories.nil?}"
     @team_members ||= TeamMember.all
   end
 end
@@ -42,9 +39,14 @@ post '/send_invitation_email' do
   end
   
   if !params[:team_member].nil?
-    @team_member=params[:team_member]
+    member_name=params[:team_member]
+    @team_member = TeamMember.find_by_name(member_name)
   else 
     @errors << "Please provide a team member from the dropdown list."
+  end
+
+ if @team_member.nil?
+    @errors << "Team member name #{@team_member} was not found."
   end
 
   if @errors.size  > 0
@@ -60,6 +62,13 @@ post '/send_invitation_email' do
     )
     email.deliver_now
 
+    #create attendee
+    attendee = Attendee.new
+    attendee.name = @name
+    attendee.email = @email
+    attendee.team_member_id = @team_member.id
+    attendee.attending = false
+    attendee.save
   end
 
   #redirect 
@@ -89,6 +98,7 @@ post '/preview_invitation' do
   
   if !params[:team_member].nil?
     @team_member=params[:team_member]
+    @team_member_obj = TeamMember.find_by_name(@team_member)
   else 
     @errors << "Please provide a team member from the dropdown list."
   end
@@ -97,9 +107,69 @@ post '/preview_invitation' do
     puts "errors #{@errors}"
     erb :show_client_invitation
   else
-    erb :preview_invitation, :layout => false
+    erb :preview_invitation, :layout => :plain_layout
   end
 
   #redirect 
-  erb :preview_invitation
+  erb :preview_invitation, :layout => :plain_layout
 end
+
+def map_all(obj)
+  obj.all.map { |c| c } 
+end
+
+get '/attendee_report'  do
+  @team_member_filter = map_all(TeamMember)
+  @sum_invitations_sent = 25
+  @sum_attending = 5
+  @team_member_selected = 'All'
+  @attending_selected = 'All'
+  @attendees = Attendee.all
+  erb :attendee_report
+end
+
+post '/filter_attendees'  do
+  @save_params = params
+  @team_member_selected =  @save_params["team_member"].first
+  @attending_selected =  @save_params["attending"].first
+  puts "attending_selected = #{@attending_selected}"
+
+  if params[:team_member].first == "All"
+    @team_member_filter = map_all(TeamMember)
+  else 
+    @team_member_filter = params[:team_member]
+  end
+
+  if params[:attending].first == "All"
+    @attending_filter = ["true", "false"]
+  else
+    @attending_filter = params[:attending]
+  end
+
+
+  puts "team_member_filter:  #{@team_member_filter }"
+  puts "attending_filter:  #{@attending_filter }"
+  @sum_invitations_sent = 25
+  @sum_attending = 5
+  puts "params:    #{params}"
+  #@attendees = Attendee.all
+  @attendees = Attendee.filter_attendees(@team_member_filter, @attending_filter)
+
+  erb :attendee_report
+end
+
+get '/show_registration' do
+  puts "params #{params}"
+  @name = params[:name]
+  @email = params[:email]
+  @team_member = params[:team_member]
+    erb :show_registration, :layout => :min_layout
+end
+
+post '/submit_registration' do
+  puts "params  #{params}"
+  erb :thank_you, :layout => :min_layout
+  #get attendee and save info
+end
+
+

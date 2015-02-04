@@ -31,13 +31,13 @@
   <body>
     <div class="thumbnail" style="width: 600px; margin-left: 10%; margin-top: 2%;">
     <form action="/send_invitation_email" method="post" >
-       <a href="http://wrightliving.com"><img src="http://wrightliving.com/wp-content/themes/wli/images/wli-logo.jpg" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a><a href="http://wrightliving.com"><img src="images/Wright-Logo-small.jpg" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
+       <a href="http://wrightliving.com"><img src="images/Wright-Logo-small.jpg" alt="<= @reference %>"  style="display: block; margin-left: auto;margin-right: auto;"></a>
 				<br>
           <br>
           <p>Dear <%=@name%>,</p>
           <p><%=@text%></p>
         <br>
-        <p  style="color: #656769;">  Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form?team_member=<%= @team_member%>" style="color: #8bc129;">Registration Page</a> to insure your spot today.<p>
+        <p  style="color: #656769;">  Please follow this link to our <a href="https://wright-power.herokuapp.com/show_registration?name=<%= @name %>&team_member_id=<%= @team_member_obj.id %>&email=<%= @email %>"  style="color: #8bc129;">Registration Page</a> to insure your spot today.<p>
         <div class="row">
           <div class="col-lg-10">
             <div class="well">
@@ -46,7 +46,7 @@
               <p>7:00 - 8:00 pm  Guest Speaker Dr Bob Wright</p>
               <p>405 N Wabash Ave, 3rd Floor</p>
               <p>Chicago, IL  60611</p>
-        <p>Please sign in with the building's concierge and take the elevators up to the 3rd floor.</p>
+            <p>Please sign in with the building's concierge and take the elevators up to the 3rd floor.</p>
              </div>
            </div>
          </div>

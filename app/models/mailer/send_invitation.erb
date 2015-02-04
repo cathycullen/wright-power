@@ -36,7 +36,7 @@
           <p>Dear <%=@name%>,</p>
           <p><%=@text%></p>
         <br>
-        <p  style="color: #656769;">  Please follow this link to our <a href="https://jma-tools.herokuapp.com/jma_payment_form?team_member=<%= @team_member%>" style="color: #8bc129;">Registration Page</a> to insure your spot today.<p>
+        <p  style="color: #656769;">  Please follow this link to our <a href="https://wright-power.herokuapp.com/show_registration?name=<%= @name %>&team_member_id=<%= @team_member.id %>&email=<%= @email %>" style="color: #8bc129;">Registration Page</a> to insure your spot today.<p>
         <div class="row">
           <div class="col-lg-10">
             <div class="well">
