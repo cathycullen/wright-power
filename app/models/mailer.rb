@@ -33,6 +33,8 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
       }
       
       puts "sending invitation to:  #{@email} from: #{ENV['EMAIL_FROM_ADDRESS']}"
+
+      #attachments['win_event_flyer.pdf'] = File.read('public/images/win_event_flyer.pdf')
       mail( 
         :to      =>  @email,
         :from    => ENV['EMAIL_FROM_ADDRESS'],
