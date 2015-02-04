@@ -19,7 +19,7 @@ end
 
 post '/send_invitation_email' do
 
-  puts "in post /send_invitation_email team members #{@team_members}"
+  puts " /send_invitation_email team members #{params}"
   @errors = []
   if !params[:name].nil?
     @name=params[:name]
@@ -77,7 +77,8 @@ end
 
 post '/preview_invitation' do
 
-  puts "in post /send_invitation_email team members #{@team_members}"
+  team_members
+  puts "in post /send_invitation_email params #{params}"
   @errors = []
   if !params[:name].nil?
     @name=params[:name]
@@ -95,12 +96,17 @@ post '/preview_invitation' do
   else 
     @errors << "No text has been entered."
   end
+  if !params[:closing_text].nil?
+    @closing_text=params[:closing_text]
+  end
   
-  if !params[:team_member].nil?
+  puts "params team_member : #{params[:team_member]}  #{params[:team_member].size}   ??  #{!params[:team_member].nil? or params[:team_member].size == 0 }"
+
+  if !params[:team_member].nil? and params[:team_member].size > 0
     @team_member=params[:team_member]
     @team_member_obj = TeamMember.find_by_name(@team_member)
   else 
-    @errors << "Please provide a team member from the dropdown list."
+    @errors << "Please select a team member from the dropdown list."
   end
 
   if @errors.size  > 0
@@ -111,7 +117,7 @@ post '/preview_invitation' do
   end
 
   #redirect 
-  erb :preview_invitation, :layout => :plain_layout
+  #erb :preview_invitation, :layout => :plain_layout
 end
 
 def map_all(obj)
@@ -120,8 +126,8 @@ end
 
 get '/attendee_report'  do
   @team_member_filter = map_all(TeamMember)
-  @sum_invitations_sent = 25
-  @sum_attending = 5
+  @sum_invitations_sent = Attendee.total_invites
+  @sum_attending = Attendee.total_attending
   @team_member_selected = 'All'
   @attending_selected = 'All'
   @attendees = Attendee.all
@@ -149,8 +155,8 @@ post '/filter_attendees'  do
 
   puts "team_member_filter:  #{@team_member_filter }"
   puts "attending_filter:  #{@attending_filter }"
-  @sum_invitations_sent = 25
-  @sum_attending = 5
+  @sum_invitations_sent = Attendee.total_invites
+  @sum_attending = Attendee.total_attending
   puts "params:    #{params}"
   #@attendees = Attendee.all
   @attendees = Attendee.filter_attendees(@team_member_filter, @attending_filter)

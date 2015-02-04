@@ -15,4 +15,13 @@ class Attendee < ActiveRecord::Base
   def self.filter_attendees(team_member_id, attending_filter)
         Attendee.where(team_member_id: team_member_id, attending: attending_filter)
   end
+
+  def self.total_attending()
+    Attendee.where(attending: true).count
+  end
+
+  def self.total_invites()
+    Attendee.count
+  end
+
 end

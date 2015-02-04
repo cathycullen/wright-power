@@ -15,22 +15,42 @@
           <div class="control-group" >
             <div class="col-md-12">
               <label class="control-label" for="textarea">Name</label> 
-              <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
-              <label class="control-label" for="textarea">Email</label>
-              <input type="text" class="form-control" name="email"  title="Enter Recipients Email" placeholder="Email" required >
+              <% if @name %>
+                <input type="text" class="form-control" name="name" value="<%=@name%>" required >
+              <% else %>
+                <input type="text" class="form-control" name="name" title="Enter Recipients Name" placeholder="Name" required >
+              <%end%>
+                <label class="control-label" for="textarea">Email</label>
+             <% if @email %>
+            <input type="text" class="form-control" name="email" value="<%=@email%>" required >
+            <% else %>
+              <input type="text" class="form-control" name="email"  title="Enter Recipients Email"  placeholder="Name" required >
+            <%end%>
               
-              <label class="control-label" for="textarea">Invitation Text</label>
-              <textarea class="form-control" name="text" rows="10">It was a pleasure speaking with you the other day.  As I mentioned, I am part of a team that is sponsoring an event entitled Leadership and Power Blockers.   It's taking place on Feb 25th at 7 pm.  The speaker is Dr Bob Wright of Wright Living.  He is a really compelling speaker.  I think you would really enjoy his insight.  
+            <label class="control-label" for="textarea">Invitation Text</label>
+            <% if @text %> 
+               <textarea class="form-control" name="text" rows="10"><%=@text %>
               </textarea>
+              <% else %>
+                <textarea class="form-control" name="text" rows="10">It was a pleasure speaking with you the other day.  As I mentioned, I am part of a team that is sponsoring an event entitled Leadership and Power Blockers.   It's taking place on Feb 25th at 7 pm.  The speaker is Dr Bob Wright of Wright Living.  He is a really compelling speaker.  I think you would really enjoy his insight.  
+                </textarea>
+            <% end %> 
+            <label class="control-label" for="textarea">Closing Text</label>
+            <% if @closing_text %> 
+               <textarea class="form-control" name="closing_text" rows="1"><%=@closing_text %>
+              </textarea>
+              <% else %>
+                <textarea class="form-control" name="closing_text" rows="1">I look forward to speaking with you soon.  
+                </textarea>
+            <% end %> 
 
-
-              <label class="control-label" for="textarea">Team Member</label>  
-                <select name="team_member" style="width:100%; ">
-                    <option value=""></option>
-                  <% @team_members.each do |member|%>         
-                    <option value="<%= member.name %>"><%= member.name %></option>
-                  <% end %>
-                </select>
+            <label class="control-label" for="textarea">Team Member</label>  
+              <select name="team_member" style="width:100%; ">
+                  <option value=""></option>
+                <% @team_members.each do |member|%>         
+                  <option value="<%= member.name %>"><%= member.name %></option>
+                <% end %>
+              </select>
               <hr>
               <div class="form-actions">
                 <button type="submit" class="btn btn-success" title="Select to Send Payment Link to Client">Preview</button>

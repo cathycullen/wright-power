@@ -12,9 +12,9 @@ member = TeamMember.create(name: "Yann Dang", email: "yanndang@gmail.com")
 member = TeamMember.create(name: "Therese Arnaudo", email: "therese.arnaudo@oracle.com")
 
 Attendee.delete_all
-attendee = Attendee.create(name: "Mary Smith", email: "cathy@softwareoptions.com", team_member_id: 1, attending: true)
-attendee = Attendee.create(name: "John Doe", email: "cathy@softwareoptions.com", team_member_id: 2, attending: false)
-attendee = Attendee.create(name: "Jody Michael", email: "cathy@softwareoptions.com", team_member_id: 3, attending: true)
-attendee = Attendee.create(name: "Jane Doe", email: "cathy@softwareoptions.com", team_member_id: 4, attending: false)
+attendee = Attendee.create(name: "Mary Smith", email: "cathy@softwareoptions.com", team_member_id: 11, attending: true)
+attendee = Attendee.create(name: "John Doe", email: "cathy@softwareoptions.com", team_member_id: 12, attending: false)
+attendee = Attendee.create(name: "Jody Michael", email: "cathy@softwareoptions.com", team_member_id: 13, attending: true)
+attendee = Attendee.create(name: "Jane Doe", email: "cathy@softwareoptions.com", team_member_id: 14, attending: false)
 
 
