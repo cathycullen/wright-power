@@ -44,6 +44,11 @@ post '/send_invitation_email' do
   else 
     @errors << "No text has been entered."
   end
+  if !params[:closing_text].nil?
+    @closing_text=params[:closing_text]
+  else 
+    @errors << "No closing text has been entered."
+  end
   
   if !params[:team_member].nil?
     member_name=params[:team_member]
@@ -61,11 +66,14 @@ post '/send_invitation_email' do
     erb :show_client_invitation
   else
     puts "#{@name}, #{@email}, #{@team_member}"
+    puts "***** text:  #{@text}"
+    puts "***** closing_text:  #{@closing_text}"
     email = Mailer.send_invitation(
     @name,
     @email,
     @text,
-    @team_member
+    @team_member,
+    @closing_text
     )
     email.deliver_now
 

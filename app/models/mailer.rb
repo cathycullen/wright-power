@@ -7,12 +7,13 @@ ActionMailer::Base.view_paths= File.dirname(__FILE__)
 
   class Mailer < ActionMailer::Base
   
-    def send_invitation(name, email, text, team_member)
+    def send_invitation(name, email, text, team_member, closing_text)
       puts "mailer.send_invitation called #{name}, #{email}, #{team_member}"
       @name = name
       @email =  email
       @text = text
       @team_member = team_member
+      @closing_text = closing_text
     
     puts "#{ENV['EMAIL_ADDRESS'] }"
     puts "#{ENV['EMAIL_PORT'] }"
