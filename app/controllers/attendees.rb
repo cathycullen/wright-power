@@ -1,5 +1,4 @@
 configure do
-
 end
 
 helpers do
@@ -25,23 +24,23 @@ post '/send_invitation_email' do
 
   puts " /send_invitation_email team members #{params}"
   @errors = []
-  if !params[:name].nil?
+  if !params[:name].nil? or params[:name].length == 0
     @name=params[:name]
   else 
     @errors << "Please provide a name."
   end
-  if !params[:email].nil?
+  if !params[:email].nil? or params[:email].length == 0
     @email=params[:email]
   else 
     @errors << "Please provide a valid email."
   end
   
-  if !params[:text].nil?
+  if !params[:text].nil? or params[:text].length == 0
     @text=params[:text]
   else 
     @errors << "No text has been entered."
   end
-  if !params[:closing_text].nil?
+  if !params[:closing_text].nil?  or params[:closing_text].length == 0
     @closing_text=params[:closing_text]
   else 
     @errors << "No closing text has been entered."
@@ -106,9 +105,7 @@ post '/preview_invitation' do
   else 
     @errors << "Please provide a valid email."
   end
-  
-  if !params[:text].nil?  or params[:text].length == 0
-    @email=params[:email]
+  if !params[:text].nil? or params[:text].length == 0
     @text=params[:text]
   else 
     @errors << "No text has been entered."
@@ -214,5 +211,7 @@ post '/submit_registration' do
   erb :thank_you, :layout => :min_layout
 
 end
+
+
 
 
