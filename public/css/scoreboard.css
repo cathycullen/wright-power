@@ -1,5 +1,6 @@
 
 .scoreboard {
+  width: 16.66666667%;
   min-height: 20px;
   padding: 8px;
   margin-bottom: 20px;
@@ -7,12 +8,13 @@
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   text-align: center;
-
-  .heading {
-    font-weight: 700;
-  }
-  .score {
-    font-size: 2em;
-    color: #5e605d;
-  }
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.heading {
+  font-size: 20px;
+}
+.score {
+  font-size: 2em;
+  color: #5e605d;
 }

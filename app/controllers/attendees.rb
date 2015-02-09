@@ -1,11 +1,8 @@
 configure do
-  @team_members = TeamMember.all
 
 end
 
 helpers do
-  @team_members = TeamMember.all
-
    def team_members
     @team_members ||= TeamMember.all
   end
@@ -13,13 +10,12 @@ end
 
 get '/' do
   team_members
-  puts "team members #{@team_members}"
   @errors = []
     erb :show_client_invitation
 end
+
 post '/' do
   team_members
-  puts "team members #{@team_members}"
   @errors = []
     erb :show_client_invitation
 end
@@ -63,6 +59,7 @@ post '/send_invitation_email' do
   end
 
   if @errors.size  > 0
+    team_members
     puts "errors #{@errors}"
     erb :show_client_invitation
   else
@@ -79,7 +76,10 @@ post '/send_invitation_email' do
     email.deliver_now
 
     #create attendee
-    attendee = Attendee.new
+    attendee = Attendee.find_by_email(@email)
+    if attendee.nil?
+      attendee = Attendee.new
+    end
     attendee.name = @name
     attendee.email = @email
     attendee.team_member_id = @team_member.id
@@ -96,23 +96,24 @@ post '/preview_invitation' do
   team_members
   puts "in post /send_invitation_email params #{params}"
   @errors = []
-  if !params[:name].nil?
+  if !params[:name].nil? or params[:name].length == 0
     @name=params[:name]
   else 
     @errors << "Please provide a name."
   end
-  if !params[:email].nil?
+  if !params[:email].nil? or params[:email].length == 0
     @email=params[:email]
   else 
     @errors << "Please provide a valid email."
   end
   
-  if !params[:text].nil?
+  if !params[:text].nil?  or params[:text].length == 0
+    @email=params[:email]
     @text=params[:text]
   else 
     @errors << "No text has been entered."
   end
-  if !params[:closing_text].nil?
+  if !params[:closing_text].nil? or params[:closing_text].length == 0
     @closing_text=params[:closing_text]
   end
   
@@ -184,21 +185,30 @@ get '/show_registration' do
   puts "params #{params}"
   @name = params[:name]
   @email = params[:email]
-  @team_member = params[:team_member]
+  @team_member = params[:team_member_id]
     erb :show_registration, :layout => :min_layout
 end
 
 post '/submit_registration' do
-  puts "params  #{params}"
+  puts "/submit_registration params  #{params}"
   #get attendee and save info
   if !params[:email].nil?  && !params[:attending].nil?
     email = params[:email]
+    name = params[:name]
     attending = params[:attending]
+    team_member = params[:team_member]
     attendee = Attendee.find_by_email(email)
     if !attendee.nil?
       attendee.attending = attending
       attendee.save
       puts "Attendee #{attendee.name} is attending?  #{attending}"
+    else 
+      attendee = Attendee.new
+      attendee.name = name
+      attendee.email = email
+      attendee.team_member_id = team_member
+      attendee.attending  = attending
+      attendee.save
     end
   end
   erb :thank_you, :layout => :min_layout
